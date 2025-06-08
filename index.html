@@ -3,22 +3,39 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>探索者的思维空间</title>
+    <title>云和晚霞</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     colors: {
-                        primary: '#165DFF',
-                        secondary: '#FF7D00',
-                        dark: '#1E293B',
-                        light: '#F8FAFC'
+                        sunset: {
+                            100: '#fef3c7',
+                            200: '#fde68a',
+                            300: '#fcd34d',
+                            400: '#fbbf24',
+                            500: '#f59e0b',
+                            600: '#d97706',
+                            700: '#b45309',
+                            800: '#92400e',
+                            900: '#78350f',
+                        },
+                        cloud: {
+                            100: '#f8fafc',
+                            200: '#f1f5f9',
+                            300: '#e2e8f0',
+                            400: '#cbd5e1',
+                            500: '#94a3b8',
+                            600: '#64748b',
+                            700: '#475569',
+                            800: '#334155',
+                            900: '#1e293b',
+                        }
                     },
                     fontFamily: {
-                        inter: ['Inter', 'sans-serif'],
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
                     },
                 }
             }
@@ -26,537 +43,210 @@
     </script>
     <style type="text/tailwindcss">
         @layer utilities {
-            .content-auto {
-                content-visibility: auto;
+            .sky-gradient {
+                background: linear-gradient(to bottom, #ff7e5f, #feb47b);
             }
-            .text-shadow {
-                text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            .sky-gradient-night {
+                background: linear-gradient(to bottom, #0f172a, #334155);
             }
-            .text-gradient {
-                background-clip: text;
-                -webkit-background-clip: text;
-                color: transparent;
+            .cloud {
+                position: absolute;
+                background: white;
+                border-radius: 1000px;
+                filter: blur(10px);
+                opacity: 0.8;
             }
-            .bg-blur {
-                backdrop-filter: blur(8px);
+            .cloud::before, .cloud::after {
+                content: '';
+                position: absolute;
+                background: white;
+                border-radius: 50%;
             }
-            .scrollbar-hide::-webkit-scrollbar {
-                display: none;
+            .cloud::before {
+                width: 70%;
+                height: 70%;
+                top: -40%;
+                left: 15%;
+            }
+            .cloud::after {
+                width: 50%;
+                height: 50%;
+                top: -25%;
+                right: 15%;
             }
             .animate-float {
-                animation: float 6s ease-in-out infinite;
+                animation: float 60s linear infinite;
+            }
+            .animate-float-slow {
+                animation: float 90s linear infinite;
+            }
+            .animate-float-fast {
+                animation: float 40s linear infinite;
             }
             @keyframes float {
-                0% { transform: translateY(0px); }
-                50% { transform: translateY(-20px); }
-                100% { transform: translateY(0px); }
+                0% {
+                    transform: translateX(-100%);
+                }
+                100% {
+                    transform: translateX(200%);
+                }
+            }
+            .sun {
+                position: absolute;
+                width: 100px;
+                height: 100px;
+                background: #ffd700;
+                border-radius: 50%;
+                box-shadow: 0 0 50px 10px rgba(255, 215, 0, 0.7);
+                transition: all 5s ease;
+            }
+            .sunset-position {
+                bottom: 20%;
+                right: 20%;
+            }
+            .night-position {
+                bottom: -50px;
+                right: 20%;
+            }
+            .stars {
+                position: absolute;
+                width: 100%;
+                height: 100%;
+                opacity: 0;
+                transition: opacity 5s ease;
+            }
+            .star {
+                position: absolute;
+                background: white;
+                border-radius: 50%;
+                box-shadow: 0 0 5px white;
+            }
+            .mountain {
+                position: absolute;
+                bottom: 0;
+                border-left: 200px solid transparent;
+                border-right: 200px solid transparent;
+                border-bottom: 150px solid #334155;
+            }
+            .mountain::after {
+                content: '';
+                position: absolute;
+                bottom: -150px;
+                left: -150px;
+                border-left: 150px solid transparent;
+                border-right: 150px solid transparent;
+                border-bottom: 120px solid #1e293b;
+            }
+            .mountain2 {
+                position: absolute;
+                bottom: 0;
+                right: 0;
+                border-left: 250px solid transparent;
+                border-right: 250px solid transparent;
+                border-bottom: 180px solid #475569;
+            }
+            .mountain2::after {
+                content: '';
+                position: absolute;
+                bottom: -180px;
+                right: -200px;
+                border-left: 200px solid transparent;
+                border-right: 200px solid transparent;
+                border-bottom: 150px solid #334155;
             }
         }
     </style>
 </head>
-<body class="font-inter bg-gray-50 text-dark antialiased">
-    <!-- 导航栏 -->
-    <header id="navbar" class="fixed w-full z-50 transition-all duration-300">
-        <nav class="bg-white/80 bg-blur shadow-sm px-4 md:px-8 py-4">
-            <div class="container mx-auto flex justify-between items-center">
-                <a href="#" class="text-2xl font-bold text-primary flex items-center gap-2">
-                    <i class="fa fa-anchor"></i>
-                    <span>探索者</span>
-                </a>
-                
-                <!-- 桌面导航 -->
-                <div class="hidden md:flex items-center space-x-8">
-                    <a href="#home" class="font-medium hover:text-primary transition-colors">首页</a>
-                    <a href="#articles" class="font-medium hover:text-primary transition-colors">文章</a>
-                    <a href="#projects" class="font-medium hover:text-primary transition-colors">项目</a>
-                    <a href="#about" class="font-medium hover:text-primary transition-colors">关于我</a>
-                    <button class="bg-primary hover:bg-primary/90 text-white px-5 py-2 rounded-full transition-all transform hover:scale-105">
-                        订阅
-                    </button>
-                </div>
-                
-                <!-- 移动端菜单按钮 -->
-                <button id="menuBtn" class="md:hidden text-2xl">
-                    <i class="fa fa-bars"></i>
-                </button>
+<body class="min-h-screen overflow-hidden p-0 m-0 bg-sky-gradient transition-all duration-5000" id="sky">
+    <div class="container mx-auto h-screen relative flex flex-col items-center justify-center">
+        <div class="absolute top-0 left-0 w-full h-full overflow-hidden">
+            <!-- 太阳 -->
+            <div class="sun sunset-position" id="sun"></div>
+            
+            <!-- 星星 -->
+            <div class="stars" id="stars">
+                <div class="star w-1 h-1" style="top: 10%; left: 10%"></div>
+                <div class="star w-1.5 h-1.5" style="top: 20%; left: 80%"></div>
+                <div class="star w-1 h-1" style="top: 30%; left: 40%"></div>
+                <div class="star w-1.5 h-1.5" style="top: 40%; left: 60%"></div>
+                <div class="star w-1 h-1" style="top: 50%; left: 20%"></div>
+                <div class="star w-2 h-2" style="top: 60%; left: 90%"></div>
+                <div class="star w-1 h-1" style="top: 70%; left: 50%"></div>
+                <div class="star w-1.5 h-1.5" style="top: 80%; left: 30%"></div>
+                <div class="star w-1 h-1" style="top: 90%; left: 70%"></div>
             </div>
             
-            <!-- 移动端导航菜单 -->
-            <div id="mobileMenu" class="md:hidden hidden mt-4 py-4 border-t">
-                <div class="flex flex-col space-y-4">
-                    <a href="#home" class="font-medium hover:text-primary transition-colors py-2">首页</a>
-                    <a href="#articles" class="font-medium hover:text-primary transition-colors py-2">文章</a>
-                    <a href="#projects" class="font-medium hover:text-primary transition-colors py-2">项目</a>
-                    <a href="#about" class="font-medium hover:text-primary transition-colors py-2">关于我</a>
-                    <button class="bg-primary hover:bg-primary/90 text-white px-5 py-2 rounded-full transition-all transform hover:scale-105 w-full">
-                        订阅
-                    </button>
-                </div>
-            </div>
-        </nav>
-    </header>
-
-    <!-- 英雄区域 -->
-    <section id="home" class="pt-32 pb-20 md:pt-40 md:pb-32 bg-gradient-to-br from-blue-50 to-indigo-50 overflow-hidden">
-        <div class="container mx-auto px-4 md:px-8">
-            <div class="flex flex-col md:flex-row items-center">
-                <div class="md:w-1/2 mb-10 md:mb-0">
-                    <h1 class="text-[clamp(2.5rem,5vw,4rem)] font-bold leading-tight mb-6">
-                        <span class="bg-gradient-to-r from-primary to-secondary text-gradient">探索</span>世界，
-                        <span class="bg-gradient-to-r from-secondary to-primary text-gradient">记录</span>思考
-                    </h1>
-                    <p class="text-gray-600 text-lg mb-8 max-w-xl">
-                        我是一名热衷于技术与生活的探索者，在这里分享我的学习心得、项目经验和对世界的观察。
-                    </p>
-                    <div class="flex flex-wrap gap-4">
-                        <a href="#articles" class="bg-primary hover:bg-primary/90 text-white px-8 py-3 rounded-full transition-all transform hover:scale-105 flex items-center gap-2">
-                            <span>阅读文章</span>
-                            <i class="fa fa-arrow-right"></i>
-                        </a>
-                        <a href="#projects" class="bg-white hover:bg-gray-50 text-primary border border-primary px-8 py-3 rounded-full transition-all transform hover:scale-105 flex items-center gap-2">
-                            <span>查看项目</span>
-                            <i class="fa fa-code"></i>
-                        </a>
-                    </div>
-                    <div class="flex gap-6 mt-10">
-                        <a href="#" class="text-gray-500 hover:text-primary transition-colors text-xl">
-                            <i class="fa fa-github"></i>
-                        </a>
-                        <a href="#" class="text-gray-500 hover:text-primary transition-colors text-xl">
-                            <i class="fa fa-twitter"></i>
-                        </a>
-                        <a href="#" class="text-gray-500 hover:text-primary transition-colors text-xl">
-                            <i class="fa fa-linkedin"></i>
-                        </a>
-                        <a href="#" class="text-gray-500 hover:text-primary transition-colors text-xl">
-                            <i class="fa fa-instagram"></i>
-                        </a>
-                    </div>
-                </div>
-                <div class="md:w-1/2 relative">
-                    <div class="relative z-10 animate-float">
-                        <img src="https://picsum.photos/seed/person/600/600" alt="博主照片" class="rounded-2xl shadow-2xl mx-auto">
-                        <div class="absolute -bottom-5 -right-5 bg-white p-4 rounded-xl shadow-lg">
-                            <div class="flex items-center gap-3">
-                                <div class="bg-green-100 p-2 rounded-full">
-                                    <i class="fa fa-check text-green-500"></i>
-                                </div>
-                                <div>
-                                    <p class="text-sm font-medium">最近更新</p>
-                                    <p class="text-xs text-gray-500">2025年6月1日</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] bg-gradient-to-r from-primary/20 to-secondary/20 rounded-full filter blur-3xl -z-10"></div>
-                </div>
-            </div>
-        </div>
-        <div class="absolute bottom-0 left-0 w-full">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 120">
-                <path fill="#ffffff" fill-opacity="1" d="M0,64L80,69.3C160,75,320,85,480,80C640,75,800,53,960,48C1120,43,1280,53,1360,58.7L1440,64L1440,120L1360,120C1280,120,1120,120,960,120C800,120,640,120,480,120C320,120,160,120,80,120L0,120Z"></path>
-            </svg>
-        </div>
-    </section>
-
-    <!-- 文章区域 -->
-    <section id="articles" class="py-20 bg-white">
-        <div class="container mx-auto px-4 md:px-8">
-            <div class="text-center mb-16">
-                <h2 class="text-[clamp(1.8rem,3vw,2.5rem)] font-bold mb-4">精选文章</h2>
-                <p class="text-gray-600 max-w-2xl mx-auto">探索技术前沿，分享开发经验，记录生活感悟</p>
-            </div>
+            <!-- 云 -->
+            <div class="cloud w-40 h-16 animate-float" style="top: 20%; left: -50px; background: rgba(255, 255, 255, 0.9);"></div>
+            <div class="cloud w-60 h-20 animate-float-slow" style="top: 30%; left: -70px; background: rgba(255, 245, 238, 0.8);"></div>
+            <div class="cloud w-50 h-18 animate-float-fast" style="top: 15%; left: -60px; background: rgba(255, 235, 205, 0.7);"></div>
+            <div class="cloud w-45 h-17 animate-float" style="top: 25%; left: -55px; background: rgba(255, 228, 196, 0.6);"></div>
+            <div class="cloud w-55 h-19 animate-float-slow" style="top: 40%; left: -65px; background: rgba(255, 218, 185, 0.5);"></div>
             
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <!-- 文章卡片 1 -->
-                <article class="bg-white rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all transform hover:-translate-y-1">
-                    <div class="relative">
-                        <img src="https://picsum.photos/seed/article1/600/400" alt="人工智能在前端开发中的应用" class="w-full h-52 object-cover">
-                        <div class="absolute top-4 left-4 bg-primary text-white text-xs font-semibold px-3 py-1 rounded-full">
-                            技术
-                        </div>
-                    </div>
-                    <div class="p-6">
-                        <h3 class="text-xl font-bold mb-3 hover:text-primary transition-colors">
-                            <a href="#">人工智能在前端开发中的应用与实践</a>
-                        </h3>
-                        <p class="text-gray-600 mb-4 line-clamp-3">
-                            探索AI如何改变前端开发流程，从自动化测试到智能代码补全，再到UI设计生成，AI正在重塑我们的工作方式...
-                        </p>
-                        <div class="flex justify-between items-center">
-                            <div class="flex items-center gap-2">
-                                <img src="https://picsum.photos/seed/author1/100/100" alt="作者头像" class="w-8 h-8 rounded-full">
-                                <span class="text-sm text-gray-500">李明</span>
-                            </div>
-                            <span class="text-sm text-gray-500">2025-05-20</span>
-                        </div>
-                    </div>
-                </article>
-                
-                <!-- 文章卡片 2 -->
-                <article class="bg-white rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all transform hover:-translate-y-1">
-                    <div class="relative">
-                        <img src="https://picsum.photos/seed/article2/600/400" alt="现代CSS布局技术" class="w-full h-52 object-cover">
-                        <div class="absolute top-4 left-4 bg-secondary text-white text-xs font-semibold px-3 py-1 rounded-full">
-                            教程
-                        </div>
-                    </div>
-                    <div class="p-6">
-                        <h3 class="text-xl font-bold mb-3 hover:text-primary transition-colors">
-                            <a href="#">现代CSS布局技术：从Flexbox到Grid</a>
-                        </h3>
-                        <p class="text-gray-600 mb-4 line-clamp-3">
-                            深入理解CSS的弹性布局和网格布局，掌握现代Web页面的布局技巧，让你的设计更加灵活、响应式和美观...
-                        </p>
-                        <div class="flex justify-between items-center">
-                            <div class="flex items-center gap-2">
-                                <img src="https://picsum.photos/seed/author2/100/100" alt="作者头像" class="w-8 h-8 rounded-full">
-                                <span class="text-sm text-gray-500">王华</span>
-                            </div>
-                            <span class="text-sm text-gray-500">2025-05-12</span>
-                        </div>
-                    </div>
-                </article>
-                
-                <!-- 文章卡片 3 -->
-                <article class="bg-white rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all transform hover:-translate-y-1">
-                    <div class="relative">
-                        <img src="https://picsum.photos/seed/article3/600/400" alt="前端性能优化" class="w-full h-52 object-cover">
-                        <div class="absolute top-4 left-4 bg-green-500 text-white text-xs font-semibold px-3 py-1 rounded-full">
-                            优化
-                        </div>
-                    </div>
-                    <div class="p-6">
-                        <h3 class="text-xl font-bold mb-3 hover:text-primary transition-colors">
-                            <a href="#">前端性能优化：从理论到实践的全面指南</a>
-                        </h3>
-                        <p class="text-gray-600 mb-4 line-clamp-3">
-                            全面解析前端性能优化的关键指标和实用技巧，从资源加载、渲染优化到代码分割，提升用户体验...
-                        </p>
-                        <div class="flex justify-between items-center">
-                            <div class="flex items-center gap-2">
-                                <img src="https://picsum.photos/seed/author3/100/100" alt="作者头像" class="w-8 h-8 rounded-full">
-                                <span class="text-sm text-gray-500">张伟</span>
-                            </div>
-                            <span class="text-sm text-gray-500">2025-05-05</span>
-                        </div>
-                    </div>
-                </article>
-            </div>
-            
-            <div class="text-center mt-12">
-                <a href="#" class="inline-flex items-center gap-2 text-primary font-medium hover:underline">
-                    <span>查看更多文章</span>
-                    <i class="fa fa-long-arrow-right"></i>
-                </a>
-            </div>
+            <!-- 山 -->
+            <div class="mountain" style="left: 10%"></div>
+            <div class="mountain2" style="right: 10%"></div>
         </div>
-    </section>
-
-    <!-- 项目区域 -->
-    <section id="projects" class="py-20 bg-gray-50">
-        <div class="container mx-auto px-4 md:px-8">
-            <div class="text-center mb-16">
-                <h2 class="text-[clamp(1.8rem,3vw,2.5rem)] font-bold mb-4">我的项目</h2>
-                <p class="text-gray-600 max-w-2xl mx-auto">探索我参与的各种项目，从个人作品到开源贡献</p>
-            </div>
-            
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
-                <!-- 项目卡片 1 -->
-                <div class="bg-white rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all">
-                    <div class="p-6">
-                        <div class="flex justify-between items-start mb-4">
-                            <div>
-                                <span class="bg-blue-100 text-primary text-xs font-semibold px-3 py-1 rounded-full">开源项目</span>
-                                <h3 class="text-xl font-bold mt-3">智能博客助手</h3>
-                            </div>
-                            <a href="#" class="text-gray-400 hover:text-primary transition-colors">
-                                <i class="fa fa-github text-xl"></i>
-                            </a>
-                        </div>
-                        <p class="text-gray-600 mb-6">
-                            一个基于AI的博客写作助手，能够自动生成文章大纲、优化内容结构，并提供实时语法检查和风格建议。
-                        </p>
-                        <div class="flex flex-wrap gap-2 mb-6">
-                            <span class="bg-gray-100 text-gray-700 text-xs px-3 py-1 rounded-full">Python</span>
-                            <span class="bg-gray-100 text-gray-700 text-xs px-3 py-1 rounded-full">React</span>
-                            <span class="bg-gray-100 text-gray-700 text-xs px-3 py-1 rounded-full">OpenAI API</span>
-                            <span class="bg-gray-100 text-gray-700 text-xs px-3 py-1 rounded-full">MongoDB</span>
-                        </div>
-                        <a href="#" class="text-primary font-medium hover:underline flex items-center gap-1">
-                            <span>查看详情</span>
-                            <i class="fa fa-angle-right"></i>
-                        </a>
-                    </div>
-                </div>
-                
-                <!-- 项目卡片 2 -->
-                <div class="bg-white rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all">
-                    <div class="p-6">
-                        <div class="flex justify-between items-start mb-4">
-                            <div>
-                                <span class="bg-green-100 text-green-600 text-xs font-semibold px-3 py-1 rounded-full">个人作品</span>
-                                <h3 class="text-xl font-bold mt-3">3D可视化数据仪表盘</h3>
-                            </div>
-                            <a href="#" class="text-gray-400 hover:text-primary transition-colors">
-                                <i class="fa fa-github text-xl"></i>
-                            </a>
-                        </div>
-                        <p class="text-gray-600 mb-6">
-                            使用Three.js构建的交互式数据可视化仪表盘，支持多种数据格式导入和3D场景渲染，提供沉浸式数据分析体验。
-                        </p>
-                        <div class="flex flex-wrap gap-2 mb-6">
-                            <span class="bg-gray-100 text-gray-700 text-xs px-3 py-1 rounded-full">JavaScript</span>
-                            <span class="bg-gray-100 text-gray-700 text-xs px-3 py-1 rounded-full">Three.js</span>
-                            <span class="bg-gray-100 text-gray-700 text-xs px-3 py-1 rounded-full">D3.js</span>
-                            <span class="bg-gray-100 text-gray-700 text-xs px-3 py-1 rounded-full">Node.js</span>
-                        </div>
-                        <a href="#" class="text-primary font-medium hover:underline flex items-center gap-1">
-                            <span>查看详情</span>
-                            <i class="fa fa-angle-right"></i>
-                        </a>
-                    </div>
-                </div>
-            </div>
+        
+        <!-- 控制按钮 -->
+        <div class="absolute bottom-10 z-10 bg-white/20 backdrop-blur-md p-4 rounded-full shadow-lg">
+            <button id="toggleMode" class="bg-white/80 hover:bg-white text-sunset-800 py-2 px-6 rounded-full font-medium transition-all hover:shadow-lg flex items-center gap-2">
+                <i class="fa fa-sun-o"></i>
+                <span>日落模式</span>
+            </button>
         </div>
-    </section>
-
-    <!-- 关于我 -->
-    <section id="about" class="py-20 bg-white">
-        <div class="container mx-auto px-4 md:px-8">
-            <div class="flex flex-col md:flex-row items-center gap-12">
-                <div class="md:w-2/5">
-                    <div class="relative">
-                        <img src="https://picsum.photos/seed/profile/600/800" alt="博主照片" class="rounded-xl shadow-xl w-full max-w-md mx-auto">
-                        <div class="absolute -bottom-6 -right-6 bg-primary text-white p-6 rounded-xl shadow-lg max-w-xs">
-                            <div class="flex items-start gap-3">
-                                <div class="bg-white/20 p-2 rounded-full">
-                                    <i class="fa fa-quote-left text-xl"></i>
-                                </div>
-                                <div>
-                                    <p class="italic mb-2">不断学习和探索，是保持进步的唯一途径。</p>
-                                    <p class="text-sm font-medium">—— 探索者</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="md:w-3/5">
-                    <h2 class="text-[clamp(1.8rem,3vw,2.5rem)] font-bold mb-6">关于我</h2>
-                    <p class="text-gray-600 mb-6 leading-relaxed">
-                        你好！我是一名全栈开发者，热衷于探索前沿技术和分享知识。拥有超过8年的Web开发经验，专注于构建高性能、用户友好的Web应用。
-                    </p>
-                    <p class="text-gray-600 mb-6 leading-relaxed">
-                        我相信技术不仅是工具，更是改变世界的力量。在我的博客中，你将找到关于前端开发、后端技术、人工智能等主题的文章，以及我的项目经验和思考。
-                    </p>
-                    <div class="grid grid-cols-2 gap-6 mb-8">
-                        <div>
-                            <h3 class="text-lg font-semibold mb-3">技能</h3>
-                            <ul class="space-y-2">
-                                <li class="flex items-center gap-2">
-                                    <i class="fa fa-check text-primary"></i>
-                                    <span>前端开发：HTML5, CSS3, JavaScript, React, Vue</span>
-                                </li>
-                                <li class="flex items-center gap-2">
-                                    <i class="fa fa-check text-primary"></i>
-                                    <span>后端开发：Node.js, Python, Express, Django</span>
-                                </li>
-                                <li class="flex items-center gap-2">
-                                    <i class="fa fa-check text-primary"></i>
-                                    <span>数据库：MongoDB, MySQL, PostgreSQL</span>
-                                </li>
-                                <li class="flex items-center gap-2">
-                                    <i class="fa fa-check text-primary"></i>
-                                    <span>DevOps：Docker, Kubernetes, CI/CD</span>
-                                </li>
-                            </ul>
-                        </div>
-                        <div>
-                            <h3 class="text-lg font-semibold mb-3">兴趣</h3>
-                            <ul class="space-y-2">
-                                <li class="flex items-center gap-2">
-                                    <i class="fa fa-star text-primary"></i>
-                                    <span>人工智能与机器学习</span>
-                                </li>
-                                <li class="flex items-center gap-2">
-                                    <i class="fa fa-star text-primary"></i>
-                                    <span>3D图形与WebGL</span>
-                                </li>
-                                <li class="flex items-center gap-2">
-                                    <i class="fa fa-star text-primary"></i>
-                                    <span>性能优化与用户体验</span>
-                                </li>
-                                <li class="flex items-center gap-2">
-                                    <i class="fa fa-star text-primary"></i>
-                                    <span>开源项目与技术社区</span>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                    <a href="#" class="bg-primary hover:bg-primary/90 text-white px-8 py-3 rounded-full transition-all transform hover:scale-105 inline-flex items-center gap-2">
-                        <span>联系我</span>
-                        <i class="fa fa-paper-plane"></i>
-                    </a>
-                </div>
-            </div>
+        
+        <!-- 标题和描述 -->
+        <div class="text-center text-white z-10 mb-40">
+            <h1 class="text-[clamp(2rem,5vw,4rem)] font-bold mb-4 text-shadow-lg">云和晚霞</h1>
+            <p class="text-[clamp(1rem,2vw,1.25rem)] max-w-2xl mx-auto text-shadow-md">欣赏大自然最美的时刻，当太阳缓缓落下，云朵被染成金黄色和粉红色的绚丽景色。</p>
         </div>
-    </section>
+    </div>
 
-    <!-- 订阅区域 -->
-    <section class="py-20 bg-gradient-to-r from-primary to-blue-700 text-white">
-        <div class="container mx-auto px-4 md:px-8 text-center">
-            <h2 class="text-[clamp(1.8rem,3vw,2.5rem)] font-bold mb-4">订阅我的博客</h2>
-            <p class="text-white/80 max-w-2xl mx-auto mb-8">
-                获取最新的技术文章、项目更新和独家内容，直接发送到您的邮箱
-            </p>
-            <form class="max-w-md mx-auto flex flex-col sm:flex-row gap-3">
-                <input type="email" placeholder="您的邮箱地址" class="flex-grow px-4 py-3 rounded-full focus:outline-none focus:ring-2 focus:ring-white text-dark">
-                <button type="submit" class="bg-white text-primary hover:bg-gray-100 px-6 py-3 rounded-full font-medium transition-colors">
-                    订阅
-                </button>
-            </form>
-            <p class="text-white/60 text-sm mt-4">
-                我们尊重您的隐私，绝不会分享您的邮箱地址
-            </p>
-        </div>
-    </section>
-
-    <!-- 页脚 -->
-    <footer class="bg-dark text-white py-12">
-        <div class="container mx-auto px-4 md:px-8">
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
-                <div>
-                    <a href="#" class="text-2xl font-bold flex items-center gap-2 mb-4">
-                        <i class="fa fa-anchor"></i>
-                        <span>探索者</span>
-                    </a>
-                    <p class="text-gray-400 mb-4">
-                        探索技术与生活，分享知识与经验
-                    </p>
-                    <div class="flex gap-4">
-                        <a href="#" class="text-gray-400 hover:text-white transition-colors">
-                            <i class="fa fa-github"></i>
-                        </a>
-                        <a href="#" class="text-gray-400 hover:text-white transition-colors">
-                            <i class="fa fa-twitter"></i>
-                        </a>
-                        <a href="#" class="text-gray-400 hover:text-white transition-colors">
-                            <i class="fa fa-linkedin"></i>
-                        </a>
-                        <a href="#" class="text-gray-400 hover:text-white transition-colors">
-                            <i class="fa fa-instagram"></i>
-                        </a>
-                    </div>
-                </div>
-                <div>
-                    <h3 class="text-lg font-semibold mb-4">导航</h3>
-                    <ul class="space-y-2">
-                        <li><a href="#home" class="text-gray-400 hover:text-white transition-colors">首页</a></li>
-                        <li><a href="#articles" class="text-gray-400 hover:text-white transition-colors">文章</a></li>
-                        <li><a href="#projects" class="text-gray-400 hover:text-white transition-colors">项目</a></li>
-                        <li><a href="#about" class="text-gray-400 hover:text-white transition-colors">关于我</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h3 class="text-lg font-semibold mb-4">分类</h3>
-                    <ul class="space-y-2">
-                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">前端开发</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">后端技术</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">人工智能</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">性能优化</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h3 class="text-lg font-semibold mb-4">联系</h3>
-                    <ul class="space-y-2">
-                        <li class="flex items-center gap-2">
-                            <i class="fa fa-envelope text-gray-400"></i>
-                            <a href="mailto:contact@example.com" class="text-gray-400 hover:text-white transition-colors">contact@example.com</a>
-                        </li>
-                        <li class="flex items-center gap-2">
-                            <i class="fa fa-map-marker text-gray-400"></i>
-                            <span class="text-gray-400">北京市海淀区</span>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            <div class="pt-8 border-t border-gray-800 text-center text-gray-500 text-sm">
-                <p>&copy; 2025 探索者的思维空间. 保留所有权利.</p>
-            </div>
-        </div>
-    </footer>
-
-    <!-- 回到顶部按钮 -->
-    <button id="backToTop" class="fixed bottom-8 right-8 bg-primary text-white w-12 h-12 rounded-full flex items-center justify-center shadow-lg transform hover:scale-110 transition-all opacity-0 invisible">
-        <i class="fa fa-arrow-up"></i>
-    </button>
-
-    <!-- JavaScript -->
     <script>
-        // 导航栏滚动效果
-        const navbar = document.getElementById('navbar');
-        const backToTop = document.getElementById('backToTop');
+        // 获取DOM元素
+        const sky = document.getElementById('sky');
+        const sun = document.getElementById('sun');
+        const stars = document.getElementById('stars');
+        const toggleButton = document.getElementById('toggleMode');
+        const buttonIcon = toggleButton.querySelector('i');
+        const buttonText = toggleButton.querySelector('span');
         
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 100) {
-                navbar.classList.add('bg-white', 'shadow-md');
-                navbar.classList.remove('bg-transparent');
-                backToTop.classList.remove('opacity-0', 'invisible');
-                backToTop.classList.add('opacity-100');
+        // 状态变量
+        let isNight = false;
+        
+        // 切换日夜模式
+        toggleButton.addEventListener('click', () => {
+            isNight = !isNight;
+            
+            if (isNight) {
+                // 切换到夜景
+                sky.classList.remove('sky-gradient');
+                sky.classList.add('sky-gradient-night');
+                sun.classList.remove('sunset-position');
+                sun.classList.add('night-position');
+                stars.style.opacity = '1';
+                buttonIcon.classList.remove('fa-sun-o');
+                buttonIcon.classList.add('fa-moon-o');
+                buttonText.textContent = '白天模式';
             } else {
-                navbar.classList.remove('bg-white', 'shadow-md');
-                navbar.classList.add('bg-transparent');
-                backToTop.classList.add('opacity-0', 'invisible');
-                backToTop.classList.remove('opacity-100');
+                // 切换到日景
+                sky.classList.remove('sky-gradient-night');
+                sky.classList.add('sky-gradient');
+                sun.classList.remove('night-position');
+                sun.classList.add('sunset-position');
+                stars.style.opacity = '0';
+                buttonIcon.classList.remove('fa-moon-o');
+                buttonIcon.classList.add('fa-sun-o');
+                buttonText.textContent = '日落模式';
             }
         });
         
-        // 移动端菜单切换
-        const menuBtn = document.getElementById('menuBtn');
-        const mobileMenu = document.getElementById('mobileMenu');
-        
-        menuBtn.addEventListener('click', () => {
-            mobileMenu.classList.toggle('hidden');
-            if (mobileMenu.classList.contains('hidden')) {
-                menuBtn.innerHTML = '<i class="fa fa-bars"></i>';
-            } else {
-                menuBtn.innerHTML = '<i class="fa fa-times"></i>';
-            }
-        });
-        
-        // 平滑滚动
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                
-                const targetId = this.getAttribute('href');
-                if (targetId === '#') return;
-                
-                const targetElement = document.querySelector(targetId);
-                if (targetElement) {
-                    window.scrollTo({
-                        top: targetElement.offsetTop - 80,
-                        behavior: 'smooth'
-                    });
-                    
-                    // 关闭移动菜单
-                    if (!mobileMenu.classList.contains('hidden')) {
-                        mobileMenu.classList.add('hidden');
-                        menuBtn.innerHTML = '<i class="fa fa-bars"></i>';
-                    }
-                }
-            });
-        });
-        
-        // 回到顶部按钮
-        backToTop.addEventListener('click', () => {
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
-            });
-        });
+        // 自动切换到夜景（模拟时间流逝）
+        setTimeout(() => {
+            toggleButton.click();
+        }, 8000);
     </script>
 </body>
 </html>
     
-
